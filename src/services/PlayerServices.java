@@ -28,7 +28,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 1");
 				return null;
 			}
 		}
@@ -61,7 +61,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 2");
 				return null;
 			}
 		}
@@ -111,7 +111,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 3");
 				return -1;
 			}
 		}
@@ -143,7 +143,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 4");
 				return -1;
 			}
 		}
@@ -190,7 +190,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 5");
 				return -1;
 			}
 		}
@@ -223,7 +223,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 6");
 				return -1;
 			}
 		}
@@ -266,7 +266,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 7");
 				return -1;
 			}
 		}
@@ -299,7 +299,7 @@ public class PlayerServices {
 		if (factory == null) {
 			factory = DaoFactory.getSessionFactory();
 			if (factory == null) {
-				System.out.println("player services: factory null");
+				System.out.println("player services: factory null 8");
 				return -1;
 			}
 		}

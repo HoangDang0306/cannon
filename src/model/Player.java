@@ -1,29 +1,31 @@
 package model;
 
-import java.util.Date;
-
 import template.DaoValue;
-import utility.CommonDefine;
-import utility.CommonMethod;
 
 public class Player extends DaoValue {
-	private int id;
-	private String name;
-	private String password;
-	private String created;
-	private String updated;
-	private int match;
+	private static final String TABLE_NAME = "player_info";
+	private static final String PRIMARY_KEY = "id";
+	private Player clone;
+	
+	public int id;
+	public String name;
+	public String password;
+	public int matchId;
 	
 	public Player() {
 		
 	}
 	
-	public Player(String user, String pass) {
-		this.name = user;
+	public Player(String name, String pass) {
+		this.name = name;
 		this.password = pass;
-		this.created = CommonMethod.getDateString(new Date(), CommonDefine.DATE_NORMAL_DAY);
-		this.updated = CommonMethod.getDateString(new Date(), CommonDefine.DATE_NORMAL_DAY);
-		this.match = 0;
+		this.matchId = 0;
+		
+		//Clone
+		this.clone = new Player();
+		this.clone.name = name;
+		this.clone.password = pass;
+		this.clone.matchId = 0;
 	}
 	
 	public int getId() {
@@ -44,22 +46,25 @@ public class Player extends DaoValue {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getCreated() {
-		return created;
+	public int getMatchId() {
+		return matchId;
 	}
-	public void setCreated(String created) {
-		this.created = created;
+	public void setMatchId(int matchId) {
+		this.matchId = matchId;
 	}
-	public String getUpdated() {
-		return updated;
+
+	@Override
+	public String getTableName() {
+		return TABLE_NAME;
 	}
-	public void setUpdated(String updated) {
-		this.updated = updated;
+
+	@Override
+	public String getPrimaryKey() {
+		return PRIMARY_KEY;
 	}
-	public int getCurrentMatch() {
-		return match;
-	}
-	public void setCurrentMatch(int currentMatch) {
-		this.match = currentMatch;
+
+	@Override
+	public DaoValue getClone() {
+		return clone;
 	}
 }

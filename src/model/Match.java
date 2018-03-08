@@ -1,8 +1,9 @@
 package model;
 
 import enums.MatchStatusEnum;
+import template.DaoValue;
 
-public class Match {
+public class Match extends DaoValue {
 	private int id;
 	private int playerId;
 	private int playerBoardId;
@@ -54,6 +55,9 @@ public class Match {
 	public int getId() {
 		return id;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public short getPlayerHp() {
 		return this.playerHp;
 	}
@@ -71,5 +75,23 @@ public class Match {
 	}
 	public void setStatus(MatchStatusEnum status) {
 		this.status = MatchStatusEnum.getValue(status);
+	}
+
+	@Override
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DaoValue getClone() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

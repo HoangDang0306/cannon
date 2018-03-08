@@ -7,9 +7,14 @@ import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
 import org.apache.commons.lang.StringUtils;
 
+import enums.MatchStatusEnum;
+import model.EnemyBoard;
+import model.Match;
 import model.Player;
+import model.PlayerBoard;
 import pages.game.Index;
 import services.PlayerServices;
+import template.CommonDaoFactory;
 
 public class Login extends Page {
 
@@ -27,7 +32,14 @@ public class Login extends Page {
 	public void onInit() {
 		super.onInit();
 		
-		createLoginForm();
+		Player p = new Player("a", "b");
+		CommonDaoFactory.Insert(p);
+		
+		short a = 1;
+		PlayerBoard b = new PlayerBoard(1, a, a, a, a, a, a, a);
+		CommonDaoFactory.Insert(b);
+		
+		
 	}
 	
 	@Override

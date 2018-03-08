@@ -8,11 +8,11 @@
 	<session-factory>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/cannon</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/cannon</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password"></property>
 		<property name="hibernate.show_sql">false</property>
-		<property name="format_sql">true</property>
+		<property name="format_sql">false</property>
 		<!-- <property name="hbm2ddl.auto">create</property> -->
 
 		<mapping resource="model.xml/Player.hbm.xml"/>

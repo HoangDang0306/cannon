@@ -21,19 +21,19 @@ public class Game extends GameMainPage {
 	public void onInit() {
 		super.onInit();
 		
-		player = getPlayer();
-		if (player == null) {
-			System.out.println("[Game] player null");
-			return;
-		}
-		
-		Match match = null;
-		if (player.getCurrentMatch() > 0) { // existing 
-			match = MatchServices.Select(player.getCurrentMatch());
-		} else { //new match
-			//new enemy board
-			EnemyBoard enemyBoard = new EnemyBoard();
-		}
+//		player = getPlayer();
+//		if (player == null) {
+//			System.out.println("[Game] player null");
+//			return;
+//		}
+//		
+//		Match match = null;
+//		if (player.getCurrentMatch() > 0) { // existing 
+//			match = MatchServices.Select(player.getCurrentMatch());
+//		} else { //new match
+//			//new enemy board
+//			EnemyBoard enemyBoard = new EnemyBoard();
+//		}
 	}
 	
 	@Override

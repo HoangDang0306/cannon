@@ -1,7 +1,5 @@
 package pages.top;
 
-import java.util.Date;
-
 import org.apache.click.Page;
 import org.apache.click.control.Form;
 import org.apache.click.control.PasswordField;
@@ -11,8 +9,6 @@ import org.apache.commons.lang.StringUtils;
 
 import model.Player;
 import services.PlayerServices;
-import utility.CommonDefine;
-import utility.CommonMethod;
 import utility.GameLog;
 
 public class Register extends Page {
@@ -23,7 +19,7 @@ public class Register extends Page {
 	private static final long serialVersionUID = 1L;
 
 	public Register() {
-		GameLog.info("[REGISTER] Register page.");
+		GameLog.getInstance().info("[REGISTER] Register page.");
 	}
 	
 	@Override
@@ -61,9 +57,7 @@ public class Register extends Page {
 			player = new Player();
 			player.setName(user);
 			player.setPassword(pass);
-			player.setCreated(CommonMethod.getDateString(new Date(), CommonDefine.DATE_NORMAL_DAY));
-			player.setUpdated(CommonMethod.getDateString(new Date(), CommonDefine.DATE_NORMAL_DAY));
-			player.setCurrentMatch(0);
+			player.setMatchId(0);
 			
 			if (PlayerServices.Insert(player) < 0) {
 				System.out.println("[LOGIN] Insert Player failed");

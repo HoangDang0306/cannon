@@ -16,7 +16,7 @@ public class Index extends GameMainPage {
 	private static Player player = null;
 	
 	public Index() {
-		GameLog.info("[INDEX] Index");
+		GameLog.getInstance().info("[INDEX] Index");
 	}
 	
 	@Override

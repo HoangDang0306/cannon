@@ -1,6 +1,8 @@
 package model;
 
-public class EnemyBoard {
+import template.DaoValue;
+
+public class EnemyBoard extends DaoValue {
 	private int id;
 	private short cannon1;
 	private short cannon2;
@@ -68,5 +70,26 @@ public class EnemyBoard {
 	}
 	public int getId() {
 		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public String getTableName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DaoValue getClone() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
