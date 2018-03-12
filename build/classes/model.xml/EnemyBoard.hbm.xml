@@ -4,18 +4,20 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
 
 <hibernate-mapping>
-	<class name="model.EnemeyBoard" table="enemy_board_info">
+	<class name="model.EnemyBoard" table="enemy_board_info">
 	<id name="id" column="id" type="int">
 		<generator class="assigned"></generator>
 	</id>
 
-	<property name="cannon1" column="cannon_1" type="short"></property>
-	<property name="cannon2" column="cannon_2" type="short"></property>
-	<property name="cannon3" column="cannon_3" type="short"></property>
-	<property name="cannon4" column="cannon_4" type="short"></property>
-	<property name="cannon5" column="cannon_5" type="short"></property>
-	<property name="cannon6" column="cannon_6" type="short"></property>
-	<property name="cannon7" column="cannon_7" type="short"></property>
+	<property name="matchId" column="match_id" type="int"></property>
+	<property name="cannon1" column="cannon_1" type="int"></property>
+	<property name="cannon2" column="cannon_2" type="int"></property>
+	<property name="cannon3" column="cannon_3" type="int"></property>
+	<property name="cannon4" column="cannon_4" type="int"></property>
+	<property name="cannon5" column="cannon_5" type="int"></property>
+	<property name="cannon6" column="cannon_6" type="int"></property>
+	<property name="cannon7" column="cannon_7" type="int"></property>
+	<property name="status" column="status" type="int"></property>
 
 	</class>
 </hibernate-mapping>

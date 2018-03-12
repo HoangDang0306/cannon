@@ -5,7 +5,6 @@ import template.DaoValue;
 public class Player extends DaoValue {
 	private static final String TABLE_NAME = "player_info";
 	private static final String PRIMARY_KEY = "id";
-	private Player clone;
 	
 	public int id;
 	public String name;
@@ -13,7 +12,6 @@ public class Player extends DaoValue {
 	public int matchId;
 	
 	public Player() {
-		
 	}
 	
 	public Player(String name, String pass) {
@@ -21,11 +19,7 @@ public class Player extends DaoValue {
 		this.password = pass;
 		this.matchId = 0;
 		
-		//Clone
-		this.clone = new Player();
-		this.clone.name = name;
-		this.clone.password = pass;
-		this.clone.matchId = 0;
+		sync();
 	}
 	
 	public int getId() {
@@ -61,10 +55,5 @@ public class Player extends DaoValue {
 	@Override
 	public String getPrimaryKey() {
 		return PRIMARY_KEY;
-	}
-
-	@Override
-	public DaoValue getClone() {
-		return clone;
 	}
 }

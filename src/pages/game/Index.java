@@ -2,6 +2,7 @@ package pages.game;
 
 import org.apache.click.control.Form;
 import org.apache.click.control.Submit;
+import org.apache.commons.lang.StringUtils;
 
 import model.Player;
 import pages.top.Login;
@@ -28,11 +29,24 @@ public class Index extends GameMainPage {
 			return;
 		}
 		
+		createMenu();
+		
 	}
 	
 	@Override
 	public void onPost() {
+		String newGameStr = getContext().getRequestParameter("game");
+		String highScore = getContext().getRequestParameter("score");
 		
+		if (StringUtils.isNotEmpty(newGameStr)) {
+			setRedirect(Game.class);
+			return;
+		}
+		
+		if (StringUtils.isNotEmpty(highScore)) {
+//			setRedirect(Game.class);
+//			return;
+		}
 	}
 	
 	@Override
@@ -43,10 +57,10 @@ public class Index extends GameMainPage {
 	private void createMenu() {
 		Form menu = new Form("menu");
 		
-		Submit newGame = new Submit("new_game", "New Game");
+		Submit newGame = new Submit("game", "New Game");
 		menu.add(newGame);
 		
-		Submit highScore = new Submit("high_score", "High Score");
+		Submit highScore = new Submit("score", "High Score");
 		menu.add(highScore);
 		
 		addModel("menu", menu);

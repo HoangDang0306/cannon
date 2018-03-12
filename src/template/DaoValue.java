@@ -4,16 +4,20 @@ import java.lang.reflect.Field;
 
 import org.apache.commons.lang.StringUtils;
 
-public abstract class DaoValue {
+public abstract class DaoValue implements Cloneable {
 	public abstract String getTableName();
 	public abstract String getPrimaryKey();
 	
-	public abstract DaoValue getClone();
+	private DaoValue clone;
+	public DaoValue getClone() {
+		return this.clone;
+	};
 	
 	public Object Get(String name) {
-		Field[] fields = getClass().getFields();
+		Field[] fields = getClass().getDeclaredFields();
 		
 		for (Field field : fields) {
+			field.setAccessible(true);
 			if (field.getName().equals(name)) {
 				try {
 					return field.get(this);
@@ -29,9 +33,10 @@ public abstract class DaoValue {
 	}
 	
 	public void Set(String name, Object obj) {
-		Field[] fields = getClass().getFields();
+		Field[] fields = getClass().getDeclaredFields();
 		
 		for (Field field : fields) {
+			field.setAccessible(true);
 			if (field.getName().equals(name)) {
 				try {
 					field.set(this, obj);
@@ -45,22 +50,29 @@ public abstract class DaoValue {
 		}
 	}
 	
+	public void sync() {
+		try {
+			clone = (DaoValue) this.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public String getInsertQuery() {
-		Field[] fields = getClass().getFields();
+		Field[] fields = getClass().getDeclaredFields();
 		
 		DaoValue clone = getClone();
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO " + getTableName() + " VALUES (");
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
-			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") /*|| fields[i].getName().equals("PRIMARY_KEY")*/) {
+			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") || fields[i].getName().equals("PRIMARY_KEY")) {
 				continue;
 			} else if (fields[i].getName().equals(getPrimaryKey())) {
 				sb.append("DEFAULT, ");
 			} else {
 				if (clone.Get(fields[i].getName()) == null || StringUtils.isEmpty(clone.Get(fields[i].getName()).toString()) || clone.Get(fields[i].getName()).equals("NULL") || clone.Get(fields[i].getName()).equals("null")) {
-					System.out.println();
 					if (i < fields.length - 1) {
 						sb.append("'', ");
 					} else {
@@ -81,7 +93,7 @@ public abstract class DaoValue {
 	};
 	
 	public String getSelectQuery() {
-		Field[] fields = getClass().getFields();
+		Field[] fields = getClass().getDeclaredFields();
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT * FROM " + getTableName() + " WHERE ");
@@ -91,14 +103,17 @@ public abstract class DaoValue {
 			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") || fields[i].getName().equals("PRIMARY_KEY")) {
 				continue;
 			} else if (fields[i].getName().equals(getPrimaryKey())) {
-				continue;
+//				continue;
+				sb.append(getPrimaryKey() + " = " + Get(fields[i].getName()) + " AND ");
 			} else if (Get(fields[i].getName()) == getClone().Get(fields[i].getName().toString())) {
 				continue;
 			} else {
-				if (i < fields.length - 1) {
-					sb.append(fields[i].getName() + " = " + Get(fields[i].getName()) + ", ");
-				} else {
-					sb.append(fields[i].getName() + " = " + Get(fields[i].getName()));
+				if (Get(fields[i].getName()) != null) {
+					if (i < fields.length - 1) {
+						sb.append(fields[i].getName() + " = " + Get(fields[i].getName()) + " AND ");
+					} else {
+						sb.append(fields[i].getName() + " = " + Get(fields[i].getName()));
+					}
 				}
 			}
 		}
@@ -107,7 +122,7 @@ public abstract class DaoValue {
 	};
 	
 	public String getUpdateQuery() {
-		Field[] fields = getClass().getFields();
+		Field[] fields = getClass().getDeclaredFields();
 		
 		DaoValue clone = getClone();
 		

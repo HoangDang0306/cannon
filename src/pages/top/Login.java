@@ -7,14 +7,9 @@ import org.apache.click.control.Submit;
 import org.apache.click.control.TextField;
 import org.apache.commons.lang.StringUtils;
 
-import enums.MatchStatusEnum;
-import model.EnemyBoard;
-import model.Match;
 import model.Player;
-import model.PlayerBoard;
 import pages.game.Index;
 import services.PlayerServices;
-import template.CommonDaoFactory;
 
 public class Login extends Page {
 
@@ -32,14 +27,7 @@ public class Login extends Page {
 	public void onInit() {
 		super.onInit();
 		
-		Player p = new Player("a", "b");
-		CommonDaoFactory.Insert(p);
-		
-		short a = 1;
-		PlayerBoard b = new PlayerBoard(1, a, a, a, a, a, a, a);
-		CommonDaoFactory.Insert(b);
-		
-		
+		createLoginForm();
 	}
 	
 	@Override
@@ -92,8 +80,11 @@ public class Login extends Page {
 		PasswordField pass = new PasswordField("pass", "Password");
 		form.add(pass);
 		
-		Submit submit = new Submit("submit", "Submit");
+		Submit submit = new Submit("submit", "Login");
 		form.add(submit);
+		
+		Submit register = new Submit("register", "Register");
+		form.add(register);
 		
 		addModel("formLogin", form);
 	}

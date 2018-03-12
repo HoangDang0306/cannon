@@ -10,11 +10,9 @@
 	</id>
 
 	<property name="playerId" column="player_id" type="int"></property>
-	<property name="playerBoardId" column="player_board_id" type="int"></property>
-	<property name="enemyBoardId" column="enemy_board_id" type="int"></property>
 	<property name="currentSide" column="current_side" type="int"></property>
-	<property name="playerHp" column="player_hp" type="short"></property>
-	<property name="enemyHp" column="enemy_hp" type="short"></property>
+	<property name="playerHp" column="player_hp" type="int"></property>
+	<property name="enemyHp" column="enemy_hp" type="int"></property>
 	<property name="status" column="status" type="int"></property>
 
 	</class>
