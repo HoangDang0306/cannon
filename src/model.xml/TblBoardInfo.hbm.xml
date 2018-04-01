@@ -4,12 +4,13 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
 
 <hibernate-mapping>
-	<class name="model.EnemyBoard" table="enemy_board_info">
+	<class name="tbl.info.TblBoardInfo" table="board_info">
 	<id name="id" column="id" type="int">
 		<generator class="assigned"></generator>
 	</id>
 
 	<property name="matchId" column="match_id" type="int"></property>
+	<property name="side" column="side" type="int"></property>
 	<property name="cannon1" column="cannon_1" type="int"></property>
 	<property name="cannon2" column="cannon_2" type="int"></property>
 	<property name="cannon3" column="cannon_3" type="int"></property>

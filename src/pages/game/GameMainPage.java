@@ -1,13 +1,17 @@
 package pages.game;
 
-import org.apache.click.Page;
+import java.util.List;
+
+import org.apache.click.element.CssImport;
+import org.apache.click.element.Element;
 
 import model.Player;
 import pages.top.Login;
 import services.PlayerServices;
+import template.PageBase;
 import utility.GameLog;
 
-public class GameMainPage extends Page {
+public class GameMainPage extends PageBase {
 	/**
 	 * 
 	 */
@@ -22,12 +26,30 @@ public class GameMainPage extends Page {
 			return;
 		}
 		
+		
 		int playerId = (Integer) getContext().getSessionAttribute("playerId");
+
+		logRequest(playerId);
+		
 		player = PlayerServices.getPlayerByID(playerId);
 	}
 	
 	public static Player getPlayer() {
 		return player;
+	}
+	
+	@Override
+	public List<Element> getHeadElements() {
+		super.getHeadElements();
+		
+		headElements.add(new CssImport("css/game.css"));
+		
+		return super.getHeadElements();
+	}
+	
+	@Override
+	public String getTemplate() {
+		return "pages/template/game_main_page.htm";
 	}
 	
 }

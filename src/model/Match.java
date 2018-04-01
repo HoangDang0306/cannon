@@ -1,75 +1,85 @@
 package model;
 
-import enums.MatchStatusEnum;
-import template.DaoValue;
+import enums.BoardStatusEnum;
+import enums.GameSideEnum;
+import tbl.info.TblMatchInfo;
 
-public class Match extends DaoValue {
-	private int id;
-	private int playerId;
-	private int currentSide;
-	private int playerHp;
-	private int enemyHp;
-	private int status;
+public class Match {
+	private TblMatchInfo tblMatchInfo;
 	
 	public Match() {
-		sync();
+		
 	}
 	
-	public Match(int id, int playerId, int currentSide, int playerHp, int enemyHp, MatchStatusEnum status) {
-		this.id = id;
-		this.playerId = playerId;
-		this.currentSide = currentSide;
-		this.playerHp = playerHp;
-		this.enemyHp = enemyHp;
-		this.status = status.getId();
-		
-		sync();
+	public Match(TblMatchInfo tblMatchInfo) {
+		this.tblMatchInfo = tblMatchInfo;
+	}
+	
+	public TblMatchInfo getTblMatchInfo() {
+		return this.tblMatchInfo;
+	}
+	
+	public void setTblMatchInfo(TblMatchInfo tblMatchInfo) {
+		this.tblMatchInfo = tblMatchInfo;
+	}
+	
+	public int getId() {
+		return this.tblMatchInfo.getId();
 	}
 	
 	public int getPlayerId() {
-		return playerId;
-	}
-	public void setPlayerId(int playerId) {
-		this.playerId = playerId;
-	}
-	public int getCurrentSide() {
-		return currentSide;
-	}
-	public void setCurrentSide(int currentSide) {
-		this.currentSide = currentSide;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getPlayerHp() {
-		return this.playerHp;
-	}
-	public void setPlayerHp(short playerHp) {
-		this.playerHp = playerHp;
-	}
-	public int getEnemyHp() {
-		return this.enemyHp;
-	}
-	public void setEnemyHp(short enemyHp) {
-		this.enemyHp = enemyHp;
-	}
-	public int getStatus() {
-		return this.status;
-	}
-	public void setStatus(MatchStatusEnum status) {
-		this.status = MatchStatusEnum.getValue(status);
+		return this.tblMatchInfo.getPlayerId();
 	}
 	
-	@Override
-	public String getTableName() {
-		return "match_info";
+	public void setPlayerId(int playerId) {
+		this.tblMatchInfo.setPlayerId(playerId);
 	}
-
-	@Override
-	public String getPrimaryKey() {
-		return "id";
+	
+	public GameSideEnum getCurrentSide() {
+		return GameSideEnum.getSide((Integer) tblMatchInfo.getCurrentSide());
+	}
+	
+	public void setCurrentSide(GameSideEnum sideEnum) {
+		this.tblMatchInfo.setCurrentSide(sideEnum.ordinal());
+	}
+	
+	public int getPlayerHp() {
+		return this.tblMatchInfo.getPlayerHp();
+	}
+	
+	public void setPlayerHp(int hp) {
+		this.tblMatchInfo.setPlayerHp(hp);
+	}
+	
+	public int getEnemyHp() {
+		return this.tblMatchInfo.getEnemyHp();
+	}
+	
+	public void setEnemyHp(int hp) {
+		this.tblMatchInfo.setEnemyHp(hp);
+	}
+	
+	public int getPlayerScore() {
+		return this.tblMatchInfo.getPlayerScore();
+	}
+	
+	public void setPlayerScore(int score) {
+		this.tblMatchInfo.setPlayerScore(score);
+	}
+	
+	public int getTurn() {
+		return this.tblMatchInfo.getTurn();
+	}
+	
+	public void setTurn(int turn) {
+		this.tblMatchInfo.setTurn(turn);;
+	}
+	
+	public BoardStatusEnum getBoardStatus() {
+		return BoardStatusEnum.getStatus((Integer) this.tblMatchInfo.getStatus());
+	}
+	
+	public void setBoardStatus(BoardStatusEnum boardStatus) {
+		this.tblMatchInfo.setStatus(boardStatus.ordinal());
 	}
 }

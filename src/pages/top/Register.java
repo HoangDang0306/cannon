@@ -1,6 +1,5 @@
 package pages.top;
 
-import org.apache.click.Page;
 import org.apache.click.control.Form;
 import org.apache.click.control.PasswordField;
 import org.apache.click.control.Submit;
@@ -9,9 +8,11 @@ import org.apache.commons.lang.StringUtils;
 
 import model.Player;
 import services.PlayerServices;
+import template.CommonDaoFactory;
+import template.PageBase;
 import utility.GameLog;
 
-public class Register extends Page {
+public class Register extends PageBase {
 
 	/**
 	 * 
@@ -32,11 +33,11 @@ public class Register extends Page {
 	public void onPost() {
 		super.onPost();
 		
-		String user = getContext().getRequestParameter("user");
+		String name = getContext().getRequestParameter("name");
 		String pass = getContext().getRequestParameter("pass");
 		String confirm = getContext().getRequestParameter("confirm");
 		
-		if (StringUtils.isEmpty(user) || StringUtils.isEmpty(pass) || StringUtils.isEmpty(confirm)) {
+		if (StringUtils.isEmpty(name) || StringUtils.isEmpty(pass) || StringUtils.isEmpty(confirm)) {
 			showError("Please fill correctly");
 			return;
 		}
@@ -46,8 +47,8 @@ public class Register extends Page {
 			return;
 		}
 		
-		if (StringUtils.isNotEmpty(user)) {
-			Player player = PlayerServices.getPlayerByName(user);
+		if (StringUtils.isNotEmpty(name)) {
+			Player player = PlayerServices.getPlayerByName(name);
 			if (player != null) {
 				System.out.println("[LOGIN] This username is existing!");
 				showError("This username is existing!");
@@ -55,11 +56,11 @@ public class Register extends Page {
 			}
 			
 			player = new Player();
-			player.setName(user);
+			player.setName(name);
 			player.setPassword(pass);
 			player.setMatchId(0);
 			
-			if (PlayerServices.Insert(player) < 0) {
+			if (CommonDaoFactory.Insert(player.getTblPlayerInfo()) < 0) {
 				System.out.println("[LOGIN] Insert Player failed");
 				return;
 			}

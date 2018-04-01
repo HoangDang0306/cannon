@@ -24,7 +24,7 @@
 <click-app charset="UTF-8" locale="us">
 
 	<pages package="pages" autobinding="annotation">
-		<page classname="game.GameMainPage" path="pages/game/game_main_page.htm"></page>
+		<page classname="game.GameMainPage" path="pages/template/game_main_page.htm"></page>
 		<page classname="game.Index" path="pages/game/index.htm"></page>
 		<page classname="game.Game" path="pages/game/game.htm"></page>
 		<page classname="top.Login" path="pages/top/login.htm"></page>

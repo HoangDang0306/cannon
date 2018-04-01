@@ -4,7 +4,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
 
 <hibernate-mapping>
-	<class name="model.Player" table="player_info">
+	<class name="tbl.info.TblPlayerInfo" table="player_info">
 	<id name="id" column="id" type="int">
 		<generator class="identity"></generator>
 	</id>

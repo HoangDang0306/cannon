@@ -15,10 +15,9 @@
 		<property name="format_sql">false</property>
 		<!-- <property name="hbm2ddl.auto">create</property> -->
 
-		<mapping resource="model.xml/Player.hbm.xml"/>
-		<mapping resource="model.xml/PlayerBoard.hbm.xml"/>
-		<mapping resource="model.xml/EnemyBoard.hbm.xml"/>
-		<mapping resource="model.xml/Match.hbm.xml"/>
+		<mapping resource="model.xml/TblPlayerInfo.hbm.xml"/>
+		<mapping resource="model.xml/TblBoardInfo.hbm.xml"/>
+		<mapping resource="model.xml/TblMatchInfo.hbm.xml"/>
 	</session-factory>
 
 </hibernate-configuration>  

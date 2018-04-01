@@ -4,15 +4,19 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
 
 <hibernate-mapping>
-	<class name="model.Match" table="match_info">
+	<class name="tbl.info.TblMatchInfo" table="match_info">
 	<id name="id" column="id" type="int">
 		<generator class="assigned"></generator>
 	</id>
 
 	<property name="playerId" column="player_id" type="int"></property>
+	<property name="playerBoard" column="player_board" type="int"></property>
+	<property name="enemyBoard" column="enemy_board" type="int"></property>
 	<property name="currentSide" column="current_side" type="int"></property>
 	<property name="playerHp" column="player_hp" type="int"></property>
 	<property name="enemyHp" column="enemy_hp" type="int"></property>
+	<property name="playerScore" column="player_score" type="int"></property>
+	<property name="turn" column="turn" type="int"></property>
 	<property name="status" column="status" type="int"></property>
 
 	</class>

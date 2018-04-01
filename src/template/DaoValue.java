@@ -13,6 +13,10 @@ public abstract class DaoValue implements Cloneable {
 		return this.clone;
 	};
 	
+	public DaoValue() {
+		sync();
+	}
+	
 	public Object Get(String name) {
 		Field[] fields = getClass().getDeclaredFields();
 		
@@ -62,17 +66,16 @@ public abstract class DaoValue implements Cloneable {
 	public String getInsertQuery() {
 		Field[] fields = getClass().getDeclaredFields();
 		
-		DaoValue clone = getClone();
 		StringBuilder sb = new StringBuilder();
 		sb.append("INSERT INTO " + getTableName() + " VALUES (");
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
-			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") || fields[i].getName().equals("PRIMARY_KEY")) {
+			if (fields[i].getName().equals("clone")) {
 				continue;
 			} else if (fields[i].getName().equals(getPrimaryKey())) {
 				sb.append("DEFAULT, ");
 			} else {
-				if (clone.Get(fields[i].getName()) == null || StringUtils.isEmpty(clone.Get(fields[i].getName()).toString()) || clone.Get(fields[i].getName()).equals("NULL") || clone.Get(fields[i].getName()).equals("null")) {
+				if (this.Get(fields[i].getName()) == null) {
 					if (i < fields.length - 1) {
 						sb.append("'', ");
 					} else {
@@ -80,9 +83,9 @@ public abstract class DaoValue implements Cloneable {
 					}
 				} else {
 					if (i < fields.length - 1) {
-						sb.append(clone.Get(fields[i].getName()) + ", ");
+						sb.append(this.Get(fields[i].getName()) + ", ");
 					} else {
-						sb.append(clone.Get(fields[i].getName()));
+						sb.append(this.Get(fields[i].getName()));
 					}
 				}
 			}
@@ -94,32 +97,36 @@ public abstract class DaoValue implements Cloneable {
 	
 	public String getSelectQuery() {
 		Field[] fields = getClass().getDeclaredFields();
+
+		StringBuilder query = new StringBuilder();
+		query.append("FROM ");
+		query.append(getClass().getSimpleName());
+		query.append(" WHERE ");
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT * FROM " + getTableName() + " WHERE ");
-		
+		StringBuilder values = new StringBuilder();
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
-			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") || fields[i].getName().equals("PRIMARY_KEY")) {
-				continue;
-			} else if (fields[i].getName().equals(getPrimaryKey())) {
-//				continue;
-				sb.append(getPrimaryKey() + " = " + Get(fields[i].getName()) + " AND ");
-			} else if (Get(fields[i].getName()) == getClone().Get(fields[i].getName().toString())) {
-				continue;
-			} else {
-				if (Get(fields[i].getName()) != null) {
-					if (i < fields.length - 1) {
-						sb.append(fields[i].getName() + " = " + Get(fields[i].getName()) + " AND ");
-					} else {
-						sb.append(fields[i].getName() + " = " + Get(fields[i].getName()));
-					}
+			if (fields[i].getName().equals("id")) {
+				if (Integer.parseInt(this.Get(fields[i].getName()).toString()) == 0) {
+					continue;
 				}
 			}
+			
+			if (this.Get(fields[i].getName()) != null) {
+				if (!this.Get(fields[i].getName()).equals(clone.Get(fields[i].getName()))) {
+					if (values.toString().isEmpty()) {
+						values.append(fields[i].getName() + " = '" + this.Get(fields[i].getName()) + "'");
+					} else {
+						values.append(" AND " + fields[i].getName() + " = '" + this.Get(fields[i].getName()) + "'");
+					}
+				}
+			} 
 		}
 		
-		return sb.toString();
-	};
+		query.append(values.toString());
+		
+		return query.toString();
+	}
 	
 	public String getUpdateQuery() {
 		Field[] fields = getClass().getDeclaredFields();
@@ -132,19 +139,23 @@ public abstract class DaoValue implements Cloneable {
 		StringBuilder values = new StringBuilder();
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
-			if (fields[i].getName().equals("clone") || fields[i].getName().equals("TABLE_NAME") || fields[i].getName().equals("PRIMARY_KEY")) {
+			if (fields[i].getName().equals("clone")) {
 				continue;
 			} else if (fields[i].getName().equals(getPrimaryKey())) {
 				continue;
-			} else if (Get(fields[i].getName()) == getClone().Get(fields[i].getName().toString())) {
+			} else if (Get(fields[i].getName()).equals(getClone().Get(fields[i].getName()))) {
 				continue;
 			} else {
-				if (StringUtils.isEmpty(values.toString())) { //first value
+				if (StringUtils.isEmpty(values.toString())) {
 					values.append(fields[i].getName() + " = " + Get(fields[i].getName()));
 				} else {
 					values.append(", " + fields[i].getName() + " = " + Get(fields[i].getName()));
 				}
 			}
+		}
+		
+		if (StringUtils.isEmpty(values.toString())) {
+			return "";
 		}
 		
 		sb.append(values.toString());
@@ -157,13 +168,13 @@ public abstract class DaoValue implements Cloneable {
 				continue;
 			} else if (fields[i].getName().equals(getPrimaryKey())) {
 				continue;
-			} else if (Get(fields[i].getName()) == getClone().Get(fields[i].getName().toString())) {
+			} else if (this.Get(fields[i].getName()).equals(clone.Get(fields[i].getName()))) {
 				continue;
 			} else {
-				if (StringUtils.isEmpty(values.toString())) { //first value
+				if (StringUtils.isEmpty(values.toString())) {
 					values.append(fields[i].getName() + " = " + clone.Get(fields[i].getName()));
 				} else {
-					values.append(", " + fields[i].getName() + " = " + clone.Get(fields[i].getName()));
+					values.append(" AND " + fields[i].getName() + " = " + clone.Get(fields[i].getName()));
 				}
 			}
 		}

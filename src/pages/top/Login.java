@@ -1,6 +1,5 @@
 package pages.top;
 
-import org.apache.click.Page;
 import org.apache.click.control.Form;
 import org.apache.click.control.PasswordField;
 import org.apache.click.control.Submit;
@@ -10,8 +9,10 @@ import org.apache.commons.lang.StringUtils;
 import model.Player;
 import pages.game.Index;
 import services.PlayerServices;
+import template.PageBase;
+import utility.GameLog;
 
-public class Login extends Page {
+public class Login extends PageBase {
 
 	/**
 	 * 
@@ -19,31 +20,29 @@ public class Login extends Page {
 	private static final long serialVersionUID = 1L;
 	
 	public Login() {
-		System.out.println("[LOGIN] Login page.");
-		
+		GameLog.getInstance().info("Login");
 	}
 	
 	@Override
 	public void onInit() {
 		super.onInit();
-		
+
 		createLoginForm();
 	}
 	
 	@Override
 	public void onPost() {
 		super.onPost();
-		
 		String regis = getContext().getRequestParameter("register");
 		if (StringUtils.isNotEmpty(regis) && regis.equals("register")) {
 			setRedirect(Register.class);
 			return;
 		}
 		
-		String user = getContext().getRequestParameter("user");
+		String name = getContext().getRequestParameter("name");
 		String pass = getContext().getRequestParameter("pass");
 		
-		if (StringUtils.isEmpty(user)) {
+		if (StringUtils.isEmpty(name)) {
 			showError("Please enter username");
 			return;
 		}
@@ -53,10 +52,10 @@ public class Login extends Page {
 			return;
 		}
 		
-		if (StringUtils.isNotEmpty(user) && StringUtils.isNotEmpty(pass)) {
-			Player player = PlayerServices.getPlayerByName(user);
+		if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(pass)) {
+			Player player = PlayerServices.getPlayerByName(name);
 			if (player == null) {
-				System.out.println("[LOGIN] Username was not registed!");
+				GameLog.getInstance().info("[LOGIN] Username was not registed!");
 				showError("Username was not registed!");
 				return;
 			}
@@ -74,8 +73,8 @@ public class Login extends Page {
 	private void createLoginForm() {
 		Form form = new Form("login_form");
 		
-		TextField user = new TextField("user", "Username");
-		form.add(user);
+		TextField name = new TextField("name", "Username");
+		form.add(name);
 		
 		PasswordField pass = new PasswordField("pass", "Password");
 		form.add(pass);
