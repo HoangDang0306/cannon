@@ -1,7 +1,11 @@
 package pages.game;
 
+import java.util.List;
+
 import org.apache.click.control.Form;
 import org.apache.click.control.Submit;
+import org.apache.click.element.CssImport;
+import org.apache.click.element.Element;
 import org.apache.commons.lang.StringUtils;
 
 import model.Player;
@@ -18,6 +22,15 @@ public class Index extends GameMainPage {
 	private static Player player = null;
 	private static TblMatchInfo match = null;
 	
+	@Override
+	public List<Element> getHeadElements() {
+		super.getHeadElements();
+		
+		headElements.add(new CssImport("../../css/index.css"));
+		
+		return headElements;
+	}
+	
 	public Index() {
 		GameLog.getInstance().info("[INDEX] Index");
 	}
@@ -30,11 +43,6 @@ public class Index extends GameMainPage {
 			setRedirect(Login.class);
 			return;
 		}
-		
-//		match = MatchServices.getCurrentMatch(player.getTblPlayerInfo());
-		
-		createMenu();
-		
 	}
 	
 	@Override
@@ -59,30 +67,19 @@ public class Index extends GameMainPage {
 	}
 	
 	private void createMenu() {
-		Form menu = new Form("menu");
+		Form form = new Form("form");
 		
-		if (match != null) {
-			Submit con = new Submit("continue", "Continue");
-			menu.add(con);
-		}
+//		if (match != null) {
+//			Submit con = new Submit("continue", "Continue");
+//			menu.add(con);
+//		}
 		
 		Submit newGame = new Submit("game", "New Game");
-		menu.add(newGame);
+		form.add(newGame);
 		
 		Submit highScore = new Submit("score", "High Score");
-		menu.add(highScore);
+		form.add(highScore);
 		
-		addModel("menu", menu);
+		addControl(form);
 	}
-	
-//	private static void createNewMatch() {
-//		Match match = new Match(player.getId(), GameSideEnum.PLAYER, CommonDefine.PLAYER_INIT_HP, CommonDefine.ENEMY_INIT_HP, MatchStatusEnum.PREPARE);
-//		if (CommonDaoFactory.Insert(match) < 0) {
-//			GameLog.getInstance().info("Index: Cannot craete new match");
-//			return;
-//		}
-//		
-//		System.out.println(match.getId());
-//	}
-	
 }

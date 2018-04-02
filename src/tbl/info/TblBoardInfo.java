@@ -13,6 +13,7 @@ public class TblBoardInfo extends DaoValue {
 	private int cannon5;
 	private int cannon6;
 	private int cannon7;
+	private int cannon8;
 	private int status;
 	
 	public TblBoardInfo() {
@@ -77,6 +78,12 @@ public class TblBoardInfo extends DaoValue {
 	}
 	public void setCannon7(int cannon7) {
 		this.cannon7 = cannon7;
+	}
+	public int getCannon8() {
+		return cannon8;
+	}
+	public void setCannon8(int cannon8) {
+		this.cannon8 = cannon8;
 	}
 	public int getStatus() {
 		return this.status;

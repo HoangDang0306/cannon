@@ -3,5 +3,6 @@ package enums;
 public enum BlockEnum {
 	GREEN,
 	BLUE,
-	BLACK
+	BLACK,
+	RED
 }

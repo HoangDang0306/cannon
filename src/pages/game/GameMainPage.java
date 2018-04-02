@@ -42,9 +42,9 @@ public class GameMainPage extends PageBase {
 	public List<Element> getHeadElements() {
 		super.getHeadElements();
 		
-		headElements.add(new CssImport("css/game.css"));
+		headElements.add(new CssImport("../../css/game.css"));
 		
-		return super.getHeadElements();
+		return headElements;
 	}
 	
 	@Override

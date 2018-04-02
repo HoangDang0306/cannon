@@ -18,6 +18,7 @@
 	<property name="cannon5" column="cannon_5" type="int"></property>
 	<property name="cannon6" column="cannon_6" type="int"></property>
 	<property name="cannon7" column="cannon_7" type="int"></property>
+	<property name="cannon8" column="cannon_8" type="int"></property>
 	<property name="status" column="status" type="int"></property>
 
 	</class>

@@ -34,7 +34,7 @@ public class Login extends PageBase {
 	public void onPost() {
 		super.onPost();
 		String regis = getContext().getRequestParameter("register");
-		if (StringUtils.isNotEmpty(regis) && regis.equals("register")) {
+		if (StringUtils.isNotEmpty(regis) && regis.equals("Register")) {
 			setRedirect(Register.class);
 			return;
 		}

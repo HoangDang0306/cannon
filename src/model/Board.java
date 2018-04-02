@@ -1,8 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+
 import enums.BoardStatusEnum;
 import enums.GameSideEnum;
 import tbl.info.TblBoardInfo;
+import utility.CommonDefine;
+import utility.CommonMethod;
 
 public class Board {
 	private TblBoardInfo tblPlayerBoard;
@@ -97,11 +101,92 @@ public class Board {
 		this.tblPlayerBoard.Set("cannon7", cannon7);
 	}
 	
+	public int getCannon8() {
+		return (Integer) tblPlayerBoard.Get("cannon7");
+	}
+	
+	public void setCannon8(int cannon8) {
+		this.tblPlayerBoard.Set("cannon8", cannon8);
+	}
+	
 	public BoardStatusEnum getStatus() {
 		return BoardStatusEnum.getStatus((Integer) tblPlayerBoard.Get("status"));
 	}
 	
-	public void setCannon1(BoardStatusEnum status) {
+	public void setStatus(BoardStatusEnum status) {
 		this.tblPlayerBoard.Set("cannon1", status.ordinal());
+	}
+	
+	public void initCannon() {
+		setCannon1(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon2(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon3(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon4(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon5(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon6(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+		setCannon7(CommonMethod.random(CommonDefine.MAX_VALUE_BLOCK_INIT_CANNON));
+	}
+	
+	public void initCannonMouth() {
+		
+	}
+	
+	/*
+	 * return array of ready cannon
+	 */
+	public ArrayList<Integer> getReadyCannonMouth() {
+		ArrayList<Integer> array = new ArrayList<>();
+		for (int i = 0; i < CommonDefine.MAX_NUMBER_CANNON; i++) {
+			if (isCannonReady(i + 1)) {
+				array.add(i + 1);
+			}
+		}
+		
+		return array;
+	}
+	
+	public boolean isCannonReady(int index) {
+		String cannonName = "cannon" + index;
+		int value = (Integer) tblPlayerBoard.Get(cannonName);
+		int a = value & 1 << 1;
+		int b = value & 1;
+		
+		return (a != 0 && b != 0) || (a == 0 && b == 0);
+	}
+	
+	public void fire(int index) {
+		
+	}
+	
+	/*
+	 * @input index of Cannon 1 - 7
+	 * @output number ready block of that cannon
+	 */
+	public int getNumberReadyBlockOfCannon(int index) {
+		if (!isCannonReady(index)) {
+			return 0;
+		}
+		
+		String cannonName = "cannon" + index;
+		int value = (Integer) this.tblPlayerBoard.Get(cannonName);
+		
+		int check = value & 1;
+		int count = 0;
+		while (((value >> 1) & 1) == check) {
+			count++;
+			value = value >> 1;
+		}
+		return count;
+	}
+	
+	public void beDamage(int index) {
+		int indexBeDamage = CommonMethod.random(CommonDefine.MAX_NUMBER_BLOCK_EACH_CANNON);
+		
+		String cannonName = "cannon" + index;
+		int value = (Integer) this.tblPlayerBoard.Get(cannonName);
+		
+		value = value | 1 << (CommonDefine.MAX_NUMBER_BLOCK_EACH_CANNON + indexBeDamage);
+		
+		this.tblPlayerBoard.Set(cannonName, value);
 	}
 }
